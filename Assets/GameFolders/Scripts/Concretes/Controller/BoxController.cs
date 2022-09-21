@@ -10,7 +10,6 @@ namespace CubeSurfers.Controller
     public class BoxController : MonoBehaviour
     {
         BoxManager _boxManager;
-        ColorChange _colorChange;
 
         [SerializeField] private GameObject _cubePrefab;
         [SerializeField] private List<GameObject> _cubes = new List<GameObject>();
@@ -20,9 +19,13 @@ namespace CubeSurfers.Controller
       
         private void Awake()
         {
-            _colorChange = new ColorChange();
             _boxManager = GameObject.Find("BoxManager").GetComponent<BoxManager>();
             UpdateLastBlockObject();
+        }
+
+        private void Update()
+        {
+            if (_cubes.Count < 1) GameManager.Instance.IsGameActive = false;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -43,14 +46,6 @@ namespace CubeSurfers.Controller
         private void UpdateLastBlockObject()
         {
             _lastCube = _cubes[_cubes.Count - 1];
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Plane")) 
-            {
-                _colorChange.TickFixed(collision.gameObject);
-            }
         }
 
        

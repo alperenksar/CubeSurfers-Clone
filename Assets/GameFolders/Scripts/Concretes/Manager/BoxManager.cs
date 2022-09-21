@@ -18,7 +18,6 @@ namespace CubeSurfers.Manager
 
         public void IncreaseNewBlock(GameObject _willAddgameObject,GameObject _lastCube , List<GameObject> cubes )
         {
-            _playerController._rb.AddForce(Vector3.up * 1f * Time.deltaTime);
             _playerController.transform.position = new Vector3(_playerController.transform.position.x, _playerController.transform.position.y + 1f, _playerController.transform.position.z);
             _willAddgameObject.gameObject.transform.SetParent(_playerController.transform);
             _willAddgameObject.gameObject.GetComponent<BoxCollider>().isTrigger = false;

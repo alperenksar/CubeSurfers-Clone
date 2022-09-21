@@ -8,6 +8,8 @@ namespace CubeSurfers.Managers
 {
     public class GameManager : SingletonThisObject<GameManager>
     {
+        public bool IsGameActive = true;
+
         public event System.Action OnGameOver;
         public event System.Action OnMissionSucced;
 

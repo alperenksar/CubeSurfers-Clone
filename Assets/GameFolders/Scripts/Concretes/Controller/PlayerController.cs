@@ -8,7 +8,7 @@ namespace CubeSurfers.Controller
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] bool IsGameActive = true;
+        Animator animator;
 
         BoxVerticalMovement _boxVerticalMovement;
 
@@ -17,25 +17,23 @@ namespace CubeSurfers.Controller
 
         Rigidbody rb;
 
-        public Rigidbody _rb => rb;
-
-        public bool _isGameActive;
-        
-
         public float VerticalMoveSpeed =>_verticalMoveSpeed;
 
         private void Awake()
         {
             rb=GetComponent<Rigidbody>();
-            _boxVerticalMovement =new BoxVerticalMovement(this);            
+            _boxVerticalMovement =new BoxVerticalMovement(this);    
+            animator = GetComponent<Animator>();
         }
 
         private void FixedUpdate()
         {
-            if (!IsGameActive) return; 
-            _boxVerticalMovement.TickFixed();
-
+            if (!GameManager.Instance.IsGameActive) return;
+                            
+            _boxVerticalMovement.TickFixed();           
         }
+
+
 
        
 
