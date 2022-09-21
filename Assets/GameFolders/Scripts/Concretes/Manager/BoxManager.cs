@@ -1,4 +1,5 @@
 using CubeSurfers.Controller;
+using CubeSurfers.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace CubeSurfers.Manager
         public void DecreaseBlock(GameObject _willRemovegameObject, GameObject _lastCube, List<GameObject> cubes)
         {
             _lastCube.transform.parent = null;
+
             cubes.Remove(_lastCube);
             Destroy(_lastCube);
             Destroy(_willRemovegameObject);

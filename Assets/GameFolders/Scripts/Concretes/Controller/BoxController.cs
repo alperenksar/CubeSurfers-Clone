@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CubeSurfers.Manager;
 using CubeSurfers.UI;
+using CubeSurfers.Managers;
 
 namespace CubeSurfers.Controller
 {
@@ -24,11 +25,6 @@ namespace CubeSurfers.Controller
             UpdateLastBlockObject();
         }
 
-        private void FixedUpdate()
-        {
-            Debug.Log(_cubes.Count);
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("IncreaseCubeStack"))
@@ -39,7 +35,7 @@ namespace CubeSurfers.Controller
 
             else if (other.CompareTag("DecreaseCubeStack"))
             {
-                _boxManager.DecreaseBlock(other.gameObject,_lastCube,_cubes);
+                _boxManager.DecreaseBlock(other.gameObject, _lastCube, _cubes);                
                 UpdateLastBlockObject();
             }
         }
@@ -56,6 +52,12 @@ namespace CubeSurfers.Controller
                 _colorChange.TickFixed(collision.gameObject);
             }
         }
+
+       
+
+
+
+
 
         //private void DecreaseBlock(GameObject _gameObject)
         //{

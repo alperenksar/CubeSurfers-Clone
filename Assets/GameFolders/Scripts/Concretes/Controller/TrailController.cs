@@ -24,7 +24,6 @@ namespace CubeSurfers.Controller
 
         private void FixedUpdate()
         {
-            Debug.Log(trailRenderer.material.color);
             transform.position=new Vector3(playerController.transform.position.x,transform.position.y,playerController.transform.position.z);
             ChangeTrailColor();
         }
