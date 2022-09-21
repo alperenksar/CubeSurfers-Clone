@@ -7,7 +7,6 @@ namespace CubeSurfers.Controller
 {
     public class PlayerController : MonoBehaviour
     {
-        BoxController _boxController;
         BoxVerticalMovement _boxVerticalMovement;
 
         [SerializeField]
