@@ -22,9 +22,13 @@ namespace CubeSurfers.Controller
             trailRenderer.material.color = Color.green;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            transform.position=new Vector3(playerController.transform.position.x,transform.position.y,playerController.transform.position.z);
+            transform.position = new Vector3(playerController.transform.position.x, transform.position.y, playerController.transform.position.z);
+        }
+
+        private void FixedUpdate()
+        {            
             ChangeTrailColor();
         }
 
@@ -32,7 +36,7 @@ namespace CubeSurfers.Controller
         {
             if (playerController.transform.position.y >= 1)
             {
-                trailRenderer.material.color = Color.red;
+                trailRenderer.material.color = Color.green;
             }
             else
             {
