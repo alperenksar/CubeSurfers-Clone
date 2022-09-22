@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CubeSurfers.Manager
+namespace CubeSurfers.Managers
 {
     public class BoxManager : MonoBehaviour
     {
