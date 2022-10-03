@@ -1,62 +1,98 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
-using CubeSurfers.Movement;
-using CubeSurfers.Managers;
+using Debug = UnityEngine.Debug;
+using CubeSurfersClone.Abstracts.Input;
+using CubeSurfersClone.Abstracts.Movement;
+using CubeSurfersClone.Manager;
+using CubeSurfersClone.Movement;
+using CubeSurfersClone.Animations;
+using CubeSurfersClone.UI;
 
-namespace CubeSurfers.Controller
+namespace CubeSurfersClone.Controller
 {
     public class PlayerController : MonoBehaviour
     {
-        Animator animator;
+        [Header("VerticalMovement")]
+        [SerializeField] private float verticalSpeed;
+        [SerializeField] private Vector3 verticalDirection;
 
-        Rigidbody rb;
-
-        BoxHorizontalMovementMouse _boxHorizontalMovementMouse;
-
-        BoxVerticalMovement _boxVerticalMovement;
+        [Header("HorizontalMovement")]
+        [SerializeField] private float horizontalSpeed;
+        [SerializeField] private Vector3 horizontalDirection;
 
 
-        [SerializeField] private float _verticalMoveSpeed;
-        [SerializeField] private float _horizontalMoveSpeed;
 
-        [SerializeField] private float _horizontalBoundary;
+        public float VerticalSpeed => verticalSpeed;
 
-        public float VerticalMoveSpeed => _verticalMoveSpeed;
+        public float HorizontalSpeed => horizontalSpeed;
 
-        public float HorizontalMoveSpeed => _horizontalMoveSpeed;
 
-        
+        IVerticalMovement _verticalMovement;
+
+        IHorizontalMovement _horizontalMovement;
+
+        IInputReader _input;
+
+        CharacterAnimations _characterAnimations;
+
+        bool IsGameOver;
+
+
 
         private void Awake()
         {
-            rb=GetComponent<Rigidbody>();
-            _boxVerticalMovement =new BoxVerticalMovement(this);
-            _boxHorizontalMovementMouse =new BoxHorizontalMovementMouse(this);
-            animator = GetComponent<Animator>();
+            IsGameOver = false;
+            _input = GetComponent<IInputReader>();
+            _verticalMovement = new VerticalMovement(this);
+            _horizontalMovement = new HorizontalMovement(this);
+            _characterAnimations = new CharacterAnimations(this);
         }
 
         private void Update()
         {
-            if (transform.position.z >= _horizontalBoundary)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y, _horizontalBoundary);
-            }
-            else if (transform.position.z <= -_horizontalBoundary)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y, -_horizontalBoundary);
-            }
+            horizontalDirection = _input.Direction;
         }
-
 
 
         private void FixedUpdate()
         {
-            if (!GameManager.Instance.IsGameActive) return;
-                            
-            _boxVerticalMovement.TickFixed();
+            _verticalMovement.VerticalMovementAction(verticalDirection, VerticalSpeed);
+            _horizontalMovement.HorizontalMovementAction(horizontalDirection, HorizontalSpeed);
+        }
 
-            _boxHorizontalMovementMouse.TickFixed(_horizontalMoveSpeed);
+        private void LateUpdate()
+        {
+            if (IsGameOver == false) return;
+
+            _characterAnimations.GameOverAnimations();
+        }
+
+        private void OnEnable()
+        {
+            GameManager.Instance.OnMissionSucced += HandleOnMissionSuccedTrigger;
+            GameManager.Instance.OnGameOver += HandleOnGameOverTrigger;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Instance.OnMissionSucced -= HandleOnMissionSuccedTrigger;
+            GameManager.Instance.OnGameOver -= HandleOnGameOverTrigger;
+
+        }
+
+        private void HandleOnMissionSuccedTrigger()
+        {
+            verticalSpeed = 0f;
+            horizontalSpeed = 0f;
+            Debug.Log("HandleOnMissionSuccedTrigger process");
+        }
+
+        private void HandleOnGameOverTrigger()
+        {
+            IsGameOver = true;            
+            Debug.Log("Game Over!!!");
         }
 
     }

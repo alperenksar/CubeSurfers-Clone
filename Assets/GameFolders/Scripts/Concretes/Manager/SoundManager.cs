@@ -1,15 +1,13 @@
-using CubeSurfers.Abstracts.Utilities;
-using CubeSurfers.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CubeSurfersClone.Abstracts.Utilities;
 
-namespace CubeSurfers.Managers
+namespace CubeSurfersClone.Manager
 {
     public class SoundManager : SingletonThisObject<SoundManager>
     {
         [SerializeField] AudioSource[] audioSources;
-
         private void Awake()
         {
             SingletonThisGameObject(this);
@@ -35,3 +33,4 @@ namespace CubeSurfers.Managers
     }
 
 }
+

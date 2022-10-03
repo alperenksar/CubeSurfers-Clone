@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CubeSurfers.Abstracts.Utilities
+
+namespace CubeSurfersClone.Abstracts.Utilities
 {
     public abstract class SingletonThisObject<T> : MonoBehaviour
     {
         public static T Instance { get; private set; }
-
 
         protected void SingletonThisGameObject(T entity)
         {
@@ -22,5 +22,4 @@ namespace CubeSurfers.Abstracts.Utilities
             }
         }
     }
-
 }
