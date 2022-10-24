@@ -7,6 +7,7 @@ namespace CubeSurfersClone.UI
 {
     public class IconController : MonoBehaviour
     {
+
         public bool IsGameRunning;
         PauseAndContinueButton PauseAndContinueButton;
 
